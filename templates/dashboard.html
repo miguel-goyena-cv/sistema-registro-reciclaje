@@ -38,11 +38,18 @@
         </div>
     </div>
 
-    <!-- Indicador de actualización automática -->
+    <!-- Control de actualización automática -->
     <div class="row mt-3">
         <div class="col-12 text-center">
+            <button id="btnToggleActualizacion"
+                    class="btn btn-outline-success btn-sm mb-2"
+                    onclick="toggleActualizacion()">
+                <i class="fas fa-pause"></i> Pausar actualización
+            </button>
+            <br>
             <small class="text-muted">
-                <i class="fas fa-sync-alt"></i> Las gráficas se actualizan automáticamente cada 5 segundos
+                <i class="fas fa-sync-alt"></i>
+                <span id="textoIndicador">Las gráficas se actualizan automáticamente cada 15 segundos</span>
             </small>
         </div>
     </div>

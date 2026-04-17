@@ -8,6 +8,11 @@
 let chartTotales = null;
 let chartTemporal = null;
 
+// Control de actualización automática
+let actualizacionActiva = true;
+let intervaloActualizacion = null;
+const INTERVALO_SEGUNDOS = 15;
+
 // Colores para cada tipo de elemento
 const COLORES = {
     cables: '#FF6384',           // Rosa/Rojo
@@ -28,12 +33,43 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarGraficoTotales();
     cargarGraficoTemporal();
 
-    // Actualizar gráficas cada 5 segundos
-    setInterval(() => {
+    // Iniciar actualización automática cada 15 segundos
+    iniciarActualizacion();
+});
+
+/**
+ * Iniciar el intervalo de actualización automática
+ */
+function iniciarActualizacion() {
+    intervaloActualizacion = setInterval(() => {
         cargarGraficoTotales();
         cargarGraficoTemporal();
-    }, 5000);
-});
+    }, INTERVALO_SEGUNDOS * 1000);
+}
+
+/**
+ * Activar o desactivar la actualización automática
+ */
+function toggleActualizacion() {
+    actualizacionActiva = !actualizacionActiva;
+
+    const boton = document.getElementById('btnToggleActualizacion');
+    const indicador = document.getElementById('textoIndicador');
+
+    if (actualizacionActiva) {
+        iniciarActualizacion();
+        boton.classList.remove('btn-outline-secondary');
+        boton.classList.add('btn-outline-success');
+        boton.innerHTML = '<i class="fas fa-pause"></i> Pausar actualización';
+        indicador.textContent = `Las gráficas se actualizan automáticamente cada ${INTERVALO_SEGUNDOS} segundos`;
+    } else {
+        clearInterval(intervaloActualizacion);
+        boton.classList.remove('btn-outline-success');
+        boton.classList.add('btn-outline-secondary');
+        boton.innerHTML = '<i class="fas fa-play"></i> Activar actualización';
+        indicador.textContent = 'Actualización automática pausada';
+    }
+}
 
 /**
  * Cargar gráfica de totales por tipo (barras)
