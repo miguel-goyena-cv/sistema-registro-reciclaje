@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Registro de Elementos - Reciclaje{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tablet.css') }}">
+{% endblock %}
+
+{% block nav_extra %}
+<a href="/dashboard" class="btn btn-outline-light">
+    <i class="fas fa-chart-bar"></i> Ver Gráficas
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <div class="row">
+        <!-- Sección Izquierda: Formulario de Registro (60%) -->
+        <div class="col-lg-7 col-md-12">
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="fas fa-hand-pointer"></i> Registrar Elementos</h4>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Selección de Tipo -->
+                    <div class="mb-4">
+                        <h5 class="text-muted mb-3">SELECCIONA TIPO:</h5>
+                        <div class="grid-tipos">
+                            <button class="btn-tipo" data-tipo="cables">
+                                <i class="fas fa-plug"></i><br>Cables
+                            </button>
+                            <button class="btn-tipo" data-tipo="transformadores">
+                                <i class="fas fa-bolt"></i><br>Transformadores
+                            </button>
+                            <button class="btn-tipo" data-tipo="routers">
+                                <i class="fas fa-wifi"></i><br>Routers
+                            </button>
+                            <button class="btn-tipo" data-tipo="switches">
+                                <i class="fas fa-network-wired"></i><br>Switches
+                            </button>
+                            <button class="btn-tipo" data-tipo="ratones">
+                                <i class="fas fa-mouse"></i><br>Ratones
+                            </button>
+                            <button class="btn-tipo" data-tipo="otros">
+                                <i class="fas fa-box"></i><br>Otros
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Control de Cantidad -->
+                    <div class="mb-4">
+                        <h5 class="text-muted mb-3">CANTIDAD:</h5>
+                        <div class="control-cantidad">
+                            <button class="btn-cantidad" id="btn-decrementar">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <div class="display-cantidad" id="display-cantidad">1</div>
+                            <button class="btn-cantidad" id="btn-incrementar">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Botón Registrar -->
+                    <button class="btn-registrar" id="btn-registrar" disabled>
+                        <i class="fas fa-check-circle"></i> REGISTRAR
+                    </button>
+
+                    <!-- Mensaje de feedback -->
+                    <div id="mensaje-feedback" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Derecha: Mini-Resumen (40%) -->
+        <div class="col-lg-5 col-md-12 mt-3 mt-lg-0">
+            <div class="card shadow-lg">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="fas fa-clipboard-list"></i> Resumen de Hoy</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Total de Hoy -->
+                    <div class="total-hoy">
+                        <h2 class="display-4 text-center mb-3" id="total-hoy">0</h2>
+                        <p class="text-center text-muted">elementos registrados hoy</p>
+                    </div>
+
+                    <hr>
+
+                    <!-- Desglose por Tipo -->
+                    <div class="desglose-tipos">
+                        <div class="desglose-item">
+                            <i class="fas fa-plug text-secondary"></i>
+                            <span class="desglose-nombre">Cables:</span>
+                            <span class="desglose-valor" id="resumen-cables">0</span>
+                        </div>
+                        <div class="desglose-item">
+                            <i class="fas fa-bolt text-warning"></i>
+                            <span class="desglose-nombre">Transformadores:</span>
+                            <span class="desglose-valor" id="resumen-transformadores">0</span>
+                        </div>
+                        <div class="desglose-item">
+                            <i class="fas fa-wifi text-primary"></i>
+                            <span class="desglose-nombre">Routers:</span>
+                            <span class="desglose-valor" id="resumen-routers">0</span>
+                        </div>
+                        <div class="desglose-item">
+                            <i class="fas fa-network-wired text-info"></i>
+                            <span class="desglose-nombre">Switches:</span>
+                            <span class="desglose-valor" id="resumen-switches">0</span>
+                        </div>
+                        <div class="desglose-item">
+                            <i class="fas fa-mouse text-dark"></i>
+                            <span class="desglose-nombre">Ratones:</span>
+                            <span class="desglose-valor" id="resumen-ratones">0</span>
+                        </div>
+                        <div class="desglose-item">
+                            <i class="fas fa-box text-secondary"></i>
+                            <span class="desglose-nombre">Otros:</span>
+                            <span class="desglose-valor" id="resumen-otros">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Flash de éxito (overlay) -->
+<div id="flash-exito" class="flash-overlay">
+    <div class="flash-content">
+        <i class="fas fa-check-circle"></i>
+        <p>Registrado Correctamente</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/registro.js') }}"></script>
+{% endblock %}
